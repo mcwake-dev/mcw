@@ -1,0 +1,15 @@
+{
+  "name": "generate-certs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "generate:keys": "node -r ./environment/development.js ./index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "node-forge": "^1.3.1"
+  }
+}
