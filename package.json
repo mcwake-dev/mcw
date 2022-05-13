@@ -1,0 +1,11 @@
+{
+  "name": "@mcw",
+  "packageManager": "yarn@3.2.0",
+  "private": true,
+  "workspaces": [
+    "api/*",
+    "lib/*",
+    "tools/*",
+    "web/*"
+  ]
+}

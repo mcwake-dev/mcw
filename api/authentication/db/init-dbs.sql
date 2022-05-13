@@ -1,0 +1,5 @@
+DROP DATABASE IF EXISTS mcw_users;
+DROP DATABASE IF EXISTS mcw_users_test;
+
+CREATE DATABASE mcw_users;
+CREATE DATABASE mcw_users_test;
