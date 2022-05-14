@@ -32,7 +32,25 @@ async function emailExists(email) {
   }
 }
 
+async function register({ username, email, first_name, surname }) {
+  try {
+    const results = await db.query(
+      "INSERT INTO users (username, email, first_name, surname) VALUES ($1, $2, $3, $4) RETURNING id, username",
+      [username, email, first_name, surname]
+    );
+
+    if (results.rows.length === 1) {
+      return [null, results.rows[0]];
+    } else {
+      return [new Error("Unknown Database Error"), null];
+    }
+  } catch (err) {
+    return [err, null];
+  }
+}
+
 module.exports = {
   usernameExists,
   emailExists,
+  register,
 };

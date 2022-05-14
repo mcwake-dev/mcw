@@ -48,4 +48,20 @@ describe("Authentication", () => {
       expect(response.statusCode).toBe(404);
     });
   });
+  describe("POST /api/authentication/register", () => {
+    it("should return 201, username and user UUID when given valid new user credentials", async () => {
+      const response = await request(app)
+        .post("/api/authentication/register")
+        .send({
+          username: "testusername",
+          email: "test-user@gmail.com",
+          first_name: "Test",
+          surname: "User",
+        });
+
+      expect(response.statusCode).toBe(201);
+      expect(response.body).toHaveProperty("username");
+      expect(response.body).toHaveProperty("id");
+    });
+  });
 });
