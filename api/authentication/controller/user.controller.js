@@ -17,8 +17,6 @@ async function usernameExists(req, res) {
   } else {
     const [err, exists] = await dbUsernameExists(username);
 
-    console.log(exists);
-
     if (err) {
       res.status(500).send({ message: "Unknown DB error" });
     } else {
