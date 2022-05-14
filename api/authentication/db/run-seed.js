@@ -7,8 +7,10 @@ let data;
 switch (NODE_ENV) {
   case "development":
     data = devData;
+    break;
   case "test":
     data = testData;
+    break;
 }
 
 seed(data)

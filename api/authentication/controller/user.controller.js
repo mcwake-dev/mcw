@@ -17,10 +17,12 @@ async function usernameExists(req, res) {
   } else {
     const [err, exists] = await dbUsernameExists(username);
 
+    console.log(exists);
+
     if (err) {
       res.status(500).send({ message: "Unknown DB error" });
     } else {
-      exists ? res.status(200).send({ exists: true }) : res.sendStatus(404);
+      exists ? res.sendStatus(200) : res.sendStatus(404);
     }
   }
 }

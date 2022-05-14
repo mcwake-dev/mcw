@@ -1,6 +1,6 @@
 require("../environment/testing");
 const request = require("supertest");
-const app = require("../server.js");
+const app = require("../app.js");
 const db = require("../db");
 
 afterAll(async () => {
