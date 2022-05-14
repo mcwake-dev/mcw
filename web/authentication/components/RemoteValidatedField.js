@@ -29,7 +29,7 @@ export default function RemoteValidatedField({
     <LocalValidatedField
       fieldName={fieldName}
       placeholder={placeholder}
-      setValidatedValue={setValue}
+      setValidatedValue={setValidatedValue}
       schema={schema}
       remoteValidation={fieldValidation}
     />
