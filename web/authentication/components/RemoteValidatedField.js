@@ -21,6 +21,7 @@ export default function RemoteValidatedField({
         setValidatedValue(value);
       })
       .catch((err) => {
+        setValidatedValue("");
         setFieldValidation(err.status, err.message);
       });
   }, [value]);

@@ -20,6 +20,7 @@ export default function LocalValidatedField({
 
       if (err) {
         setFieldValidation(err.message);
+        setValidatedValue("");
       } else {
         setValidatedValue(value);
       }
