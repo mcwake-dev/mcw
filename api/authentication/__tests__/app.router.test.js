@@ -16,36 +16,40 @@ describe("Authentication", () => {
       expect(response.body).toHaveProperty("public_key");
     });
   });
-  describe("GET /api/authentication/exists/username/:username - user exists", () => {
-    it("should return 200 when user exists", async () => {
+  describe("GET /api/authentication/available/username/:username - user exists", () => {
+    it("should return 200 and false when user exists", async () => {
       const response = await request(app).get(
-        "/api/authentication/exists/username/zofeeney0"
+        "/api/authentication/available/username/zofeeney0"
       );
 
       expect(response.statusCode).toBe(200);
+      expect(response.body.available).toBe(false);
     });
-    it("should return 404 when user does not exist", async () => {
+    it("should return 200 and true when user does not exist", async () => {
       const response = await request(app).get(
-        "/api/authentication/exists/username/404usernotfound"
+        "/api/authentication/available/username/404usernotfound"
       );
 
-      expect(response.statusCode).toBe(404);
+      expect(response.statusCode).toBe(200);
+      expect(response.body.available).toBe(true);
     });
   });
-  describe("GET /api/authentication/exists/email/:email - email exists", () => {
-    it("should return 200 when email exists", async () => {
+  describe("GET /api/authentication/available/email/:email - email exists", () => {
+    it("should return 200 and false when available exists", async () => {
       const response = await request(app).get(
-        "/api/authentication/exists/email/zofeeney0@discovery.com"
+        "/api/authentication/available/email/zofeeney0@discovery.com"
       );
 
       expect(response.statusCode).toBe(200);
+      expect(response.body.available).toBe(false);
     });
-    it("should return 404 when does not email exist", async () => {
+    it("should return 200 and true when does not email exist", async () => {
       const response = await request(app).get(
-        "/api/authentication/exists/email/404usernotfound@dontexist.com"
+        "/api/authentication/available/email/404usernotfound@dontexist.com"
       );
 
-      expect(response.statusCode).toBe(404);
+      expect(response.statusCode).toBe(200);
+      expect(response.body.available).toBe(true);
     });
   });
   describe("POST /api/authentication/register", () => {
