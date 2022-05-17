@@ -25,6 +25,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:api/authentication"\
       },\
       {\
+        "name": "@mcw/email",\
+        "reference": "workspace:lib/email"\
+      },\
+      {\
         "name": "@mcw/validation",\
         "reference": "workspace:lib/validation"\
       },\
@@ -43,6 +47,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@mcw", ["workspace:."]],\
       ["@mcw/authentication-api", ["workspace:api/authentication"]],\
       ["@mcw/authentication-ui", ["workspace:web/authentication"]],\
+      ["@mcw/email", ["workspace:lib/email"]],\
       ["@mcw/tool-generate-certs", ["workspace:tools/generate-certs"]],\
       ["@mcw/validation", ["workspace:lib/validation"]]\
     ],\
@@ -53,6 +58,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {\
           "packageLocation": "./",\
           "packageDependencies": [\
+            ["celebrate", "npm:15.0.1"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -1230,7 +1236,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         ["workspace:.", {\
           "packageLocation": "./",\
           "packageDependencies": [\
-            ["@mcw", "workspace:."]\
+            ["@mcw", "workspace:."],\
+            ["celebrate", "npm:15.0.1"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -1241,6 +1248,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@mcw/authentication-api", "workspace:api/authentication"],\
             ["@mcw/validation", "workspace:lib/validation"],\
+            ["celebrate", "npm:15.0.1"],\
             ["cookie-parser", "npm:1.4.6"],\
             ["cors", "npm:2.8.5"],\
             ["express", "npm:4.18.1"],\
@@ -1270,6 +1278,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
+      ["@mcw/email", [\
+        ["workspace:lib/email", {\
+          "packageLocation": "./lib/email/",\
+          "packageDependencies": [\
+            ["@mcw/email", "workspace:lib/email"],\
+            ["@sendgrid/mail", "npm:7.6.2"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
       ["@mcw/tool-generate-certs", [\
         ["workspace:tools/generate-certs", {\
           "packageLocation": "./tools/generate-certs/",\
@@ -1285,6 +1303,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./lib/validation/",\
           "packageDependencies": [\
             ["@mcw/validation", "workspace:lib/validation"],\
+            ["celebrate", "npm:15.0.1"],\
             ["joi", "npm:17.6.0"]\
           ],\
           "linkType": "SOFT"\
@@ -1475,6 +1494,38 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@rushstack-eslint-patch-npm-1.1.3-78a3592ebb-53752d1e34.zip/node_modules/@rushstack/eslint-patch/",\
           "packageDependencies": [\
             ["@rushstack/eslint-patch", "npm:1.1.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@sendgrid/client", [\
+        ["npm:7.6.2", {\
+          "packageLocation": "./.yarn/cache/@sendgrid-client-npm-7.6.2-0f9d11aae9-858eafeb88.zip/node_modules/@sendgrid/client/",\
+          "packageDependencies": [\
+            ["@sendgrid/client", "npm:7.6.2"],\
+            ["@sendgrid/helpers", "npm:7.6.2"],\
+            ["axios", "npm:0.26.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@sendgrid/helpers", [\
+        ["npm:7.6.2", {\
+          "packageLocation": "./.yarn/cache/@sendgrid-helpers-npm-7.6.2-1ed9761ffc-6ec9dcf9a3.zip/node_modules/@sendgrid/helpers/",\
+          "packageDependencies": [\
+            ["@sendgrid/helpers", "npm:7.6.2"],\
+            ["deepmerge", "npm:4.2.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@sendgrid/mail", [\
+        ["npm:7.6.2", {\
+          "packageLocation": "./.yarn/cache/@sendgrid-mail-npm-7.6.2-1f7a27eab3-0bfc7cc62e.zip/node_modules/@sendgrid/mail/",\
+          "packageDependencies": [\
+            ["@sendgrid/mail", "npm:7.6.2"],\
+            ["@sendgrid/client", "npm:7.6.2"],\
+            ["@sendgrid/helpers", "npm:7.6.2"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -2117,6 +2168,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["axios", [\
+        ["npm:0.26.1", {\
+          "packageLocation": "./.yarn/cache/axios-npm-0.26.1-a6641ce4e3-d9eb58ff4b.zip/node_modules/axios/",\
+          "packageDependencies": [\
+            ["axios", "npm:0.26.1"],\
+            ["follow-redirects", "virtual:a6641ce4e3bdcc0997f8f53d9481b67c5d38e21276de8eeee7bf92881685b3ad5600bae416c2af904ceab8132bac649e7efd0af93f18e158e0e65ee05a263d72#npm:1.15.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["axobject-query", [\
         ["npm:2.2.0", {\
           "packageLocation": "./.yarn/cache/axobject-query-npm-2.2.0-6553738f52-96b8c7d807.zip/node_modules/axobject-query/",\
@@ -2483,6 +2544,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/caniuse-lite-npm-1.0.30001340-5ba8569de6-5b419c93cb.zip/node_modules/caniuse-lite/",\
           "packageDependencies": [\
             ["caniuse-lite", "npm:1.0.30001340"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["celebrate", [\
+        ["npm:15.0.1", {\
+          "packageLocation": "./.yarn/cache/celebrate-npm-15.0.1-185ccf3cdc-8f20e47f12.zip/node_modules/celebrate/",\
+          "packageDependencies": [\
+            ["celebrate", "npm:15.0.1"],\
+            ["escape-html", "npm:1.0.3"],\
+            ["joi", "npm:17.6.0"],\
+            ["lodash", "npm:4.17.21"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -3945,6 +4018,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/flatted-npm-3.2.5-0ee5a8875f-3c436e9695.zip/node_modules/flatted/",\
           "packageDependencies": [\
             ["flatted", "npm:3.2.5"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["follow-redirects", [\
+        ["npm:1.15.0", {\
+          "packageLocation": "./.yarn/cache/follow-redirects-npm-1.15.0-497d406c03-eaec81c3e0.zip/node_modules/follow-redirects/",\
+          "packageDependencies": [\
+            ["follow-redirects", "npm:1.15.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:a6641ce4e3bdcc0997f8f53d9481b67c5d38e21276de8eeee7bf92881685b3ad5600bae416c2af904ceab8132bac649e7efd0af93f18e158e0e65ee05a263d72#npm:1.15.0", {\
+          "packageLocation": "./.yarn/__virtual__/follow-redirects-virtual-f8096e1886/0/cache/follow-redirects-npm-1.15.0-497d406c03-eaec81c3e0.zip/node_modules/follow-redirects/",\
+          "packageDependencies": [\
+            ["follow-redirects", "virtual:a6641ce4e3bdcc0997f8f53d9481b67c5d38e21276de8eeee7bf92881685b3ad5600bae416c2af904ceab8132bac649e7efd0af93f18e158e0e65ee05a263d72#npm:1.15.0"],\
+            ["@types/debug", null],\
+            ["debug", null]\
+          ],\
+          "packagePeers": [\
+            "@types/debug",\
+            "debug"\
           ],\
           "linkType": "HARD"\
         }]\
@@ -5680,6 +5775,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["locate-path", "npm:5.0.0"],\
             ["p-locate", "npm:4.1.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["lodash", [\
+        ["npm:4.17.21", {\
+          "packageLocation": "./.yarn/cache/lodash-npm-4.17.21-6382451519-eb835a2e51.zip/node_modules/lodash/",\
+          "packageDependencies": [\
+            ["lodash", "npm:4.17.21"]\
           ],\
           "linkType": "HARD"\
         }]\

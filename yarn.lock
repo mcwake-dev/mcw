@@ -764,6 +764,7 @@ __metadata:
   resolution: "@mcw/authentication-api@workspace:api/authentication"
   dependencies:
     "@mcw/validation": 1.0.0
+    celebrate: ^15.0.1
     cookie-parser: ^1.4.6
     cors: ^2.8.5
     express: ^4.18.1
@@ -790,6 +791,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@mcw/email@workspace:lib/email":
+  version: 0.0.0-use.local
+  resolution: "@mcw/email@workspace:lib/email"
+  dependencies:
+    "@sendgrid/mail": ^7.6.2
+  languageName: unknown
+  linkType: soft
+
 "@mcw/tool-generate-certs@workspace:tools/generate-certs":
   version: 0.0.0-use.local
   resolution: "@mcw/tool-generate-certs@workspace:tools/generate-certs"
@@ -802,6 +811,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@mcw/validation@workspace:lib/validation"
   dependencies:
+    celebrate: ^15.0.1
     joi: ^17.6.0
   languageName: unknown
   linkType: soft
@@ -809,6 +819,8 @@ __metadata:
 "@mcw@workspace:.":
   version: 0.0.0-use.local
   resolution: "@mcw@workspace:."
+  dependencies:
+    celebrate: ^15.0.1
   languageName: unknown
   linkType: soft
 
@@ -963,6 +975,35 @@ __metadata:
   version: 1.1.3
   resolution: "@rushstack/eslint-patch@npm:1.1.3"
   checksum: 53752d1e34e45a91b30a016b837c33054fcbd0a295c0312b0812dab78289ea680d7c0c3f19c1f885f49764d416727747133765ff5bfce31a9c4cc93c7a56ebe1
+  languageName: node
+  linkType: hard
+
+"@sendgrid/client@npm:^7.6.2":
+  version: 7.6.2
+  resolution: "@sendgrid/client@npm:7.6.2"
+  dependencies:
+    "@sendgrid/helpers": ^7.6.2
+    axios: ^0.26.0
+  checksum: 858eafeb88cfad80ba94b2156ed42523a9be2022c5597eca50f018f66f1758b68a9f3a8c37eebcb2422e34b407045462111c99e4305ff5b1ec1e1b9df060c604
+  languageName: node
+  linkType: hard
+
+"@sendgrid/helpers@npm:^7.6.2":
+  version: 7.6.2
+  resolution: "@sendgrid/helpers@npm:7.6.2"
+  dependencies:
+    deepmerge: ^4.2.2
+  checksum: 6ec9dcf9a3922752b0cac40804ec7b8e74659cd4e7063dd7751d019d910570fc6e5e4c4462c08ddd5187329271f88e9d04bd594a1f7bbf75266e25a311c322d0
+  languageName: node
+  linkType: hard
+
+"@sendgrid/mail@npm:^7.6.2":
+  version: 7.6.2
+  resolution: "@sendgrid/mail@npm:7.6.2"
+  dependencies:
+    "@sendgrid/client": ^7.6.2
+    "@sendgrid/helpers": ^7.6.2
+  checksum: 0bfc7cc62e5489c02c5c9d2e5feda4a4bb53643d17b2dcf017ca24e71f98f17c52c82f5e55c3665cc03088b6869830eaf5a5a19168a9315855237072b1135fea
   languageName: node
   linkType: hard
 
@@ -1495,6 +1536,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"axios@npm:^0.26.0":
+  version: 0.26.1
+  resolution: "axios@npm:0.26.1"
+  dependencies:
+    follow-redirects: ^1.14.8
+  checksum: d9eb58ff4bc0b36a04783fc9ff760e9245c829a5a1052ee7ca6013410d427036b1d10d04e7380c02f3508c5eaf3485b1ae67bd2adbfec3683704745c8d7a6e1a
+  languageName: node
+  linkType: hard
+
 "axobject-query@npm:^2.2.0":
   version: 2.2.0
   resolution: "axobject-query@npm:2.2.0"
@@ -1777,6 +1827,17 @@ __metadata:
   version: 1.0.30001340
   resolution: "caniuse-lite@npm:1.0.30001340"
   checksum: 5b419c93cb5a67568ffe8c84520d149146e5b84056ce41ee509c89d2bd036e4ce6d87485e25dfee2bb8a818d46e0734e93cacbef6b9b911c20166b943b36b78c
+  languageName: node
+  linkType: hard
+
+"celebrate@npm:^15.0.1":
+  version: 15.0.1
+  resolution: "celebrate@npm:15.0.1"
+  dependencies:
+    escape-html: 1.0.3
+    joi: 17.x.x
+    lodash: 4.17.x
+  checksum: 8f20e47f1285fbb914f80f1f6ebb60eb224805f737a7652f1423cbcd2307f5b6e4e9681859a84e59154f7625214abe086c24a516c5483fe798db54d3066c790a
   languageName: node
   linkType: hard
 
@@ -2427,7 +2488,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"escape-html@npm:~1.0.3":
+"escape-html@npm:1.0.3, escape-html@npm:~1.0.3":
   version: 1.0.3
   resolution: "escape-html@npm:1.0.3"
   checksum: 6213ca9ae00d0ab8bccb6d8d4e0a98e76237b2410302cf7df70aaa6591d509a2a37ce8998008cbecae8fc8ffaadf3fb0229535e6a145f3ce0b211d060decbb24
@@ -2934,6 +2995,16 @@ __metadata:
   version: 3.2.5
   resolution: "flatted@npm:3.2.5"
   checksum: 3c436e9695ccca29620b4be5671dd72e5dd0a7500e0856611b7ca9bd8169f177f408c3b9abfa78dfe1493ee2d873e2c119080a8a9bee4e1a186a9e60ca6c89f1
+  languageName: node
+  linkType: hard
+
+"follow-redirects@npm:^1.14.8":
+  version: 1.15.0
+  resolution: "follow-redirects@npm:1.15.0"
+  peerDependenciesMeta:
+    debug:
+      optional: true
+  checksum: eaec81c3e0ae57aae2422e38ad3539d0e7279b3a63f9681eeea319bb683dea67502c4e097136b8ce9721542b4e236e092b6b49e34e326cdd7733c274f0a3f378
   languageName: node
   linkType: hard
 
@@ -4253,7 +4324,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"joi@npm:^17.6.0":
+"joi@npm:17.x.x, joi@npm:^17.6.0":
   version: 17.6.0
   resolution: "joi@npm:17.6.0"
   dependencies:
@@ -4451,6 +4522,13 @@ __metadata:
   version: 4.6.2
   resolution: "lodash.merge@npm:4.6.2"
   checksum: ad580b4bdbb7ca1f7abf7e1bce63a9a0b98e370cf40194b03380a46b4ed799c9573029599caebc1b14e3f24b111aef72b96674a56cfa105e0f5ac70546cdc005
+  languageName: node
+  linkType: hard
+
+"lodash@npm:4.17.x":
+  version: 4.17.21
+  resolution: "lodash@npm:4.17.21"
+  checksum: eb835a2e51d381e561e508ce932ea50a8e5a68f4ebdd771ea240d3048244a8d13658acbd502cd4829768c56f2e16bdd4340b9ea141297d472517b83868e677f7
   languageName: node
   linkType: hard
 

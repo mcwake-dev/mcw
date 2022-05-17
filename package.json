@@ -7,5 +7,8 @@
     "lib/*",
     "tools/*",
     "web/*"
-  ]
+  ],
+  "dependencies": {
+    "celebrate": "^15.0.1"
+  }
 }
