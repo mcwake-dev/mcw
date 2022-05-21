@@ -4,11 +4,11 @@ export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [buttonCaption, setButtonCaption] = useState("Request Login");
   const [submitError, setSubmitError] = useState("");
-  const enableSubmit = useState(false);
+  const [enableSubmit, setEnableSubmit] = useState(false);
   const submit = useCallback(() => {}, []);
 
   return (
-    <>
+    <div className="row bg-mid-light" id="login">
       <h2>Login</h2>
       <p>Enter the email address you registered with to log in</p>
       <form
@@ -49,6 +49,6 @@ export default function LoginForm() {
           </button>
         </div>
       </form>
-    </>
+    </div>
   );
 }

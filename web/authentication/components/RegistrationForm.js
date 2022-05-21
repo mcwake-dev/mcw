@@ -51,7 +51,7 @@ export default function RegistrationForm() {
   }, []);
 
   return (
-    <>
+    <div className="row bg-darker" id="register">
       <h2>Register</h2>
       <p>
         Complete the registration form to receive an email with a magic link to
@@ -128,6 +128,6 @@ export default function RegistrationForm() {
           </button>
         </div>
       </form>
-    </>
+    </div>
   );
 }
