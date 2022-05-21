@@ -1,18 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/router";
+import { userRemoteSchema } from "@mcw/validation/user.validation";
 
-import RemoteValidatedField from "../components/RemoteValidatedField";
-import styles from "../styles/RegistrationForm.module.css";
-import { validate as useValidation } from "@mcw/validation";
-import {
-  usernameSchema,
-  emailSchema,
-  nameSchema,
-  userSchema,
-} from "@mcw/validation/user.validation";
-import LocalValidatedField from "../components/LocalValidatedField";
 export default function RegistrationForm() {
   const router = useRouter();
+  const schema = userRemoteSchema(process.env.NEXT_PUBLIC_VALIDATION_SERVER);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [first_name, setFirstName] = useState("");
@@ -22,23 +14,21 @@ export default function RegistrationForm() {
   const [submitError, setSubmitError] = useState("");
 
   useEffect(() => {
-    useValidation(userSchema, { username, email, first_name, surname })
-      .then((result) => {
-        const [err, validated] = result;
-
-        if (err) {
-          setEnableSubmit(false);
-        } else {
-          setEnableSubmit(true);
-        }
+    setSubmitError("");
+    schema
+      .validateAsync({ username, email, first_name, surname })
+      .then((value) => {
+        setEnableSubmit(true);
       })
-      .catch((err) => {
+      .catch((error) => {
+        setSubmitError(error.message);
         setEnableSubmit(false);
       });
   }, [username, email, first_name, surname]);
 
   const submit = useCallback(() => {
     setSubmitError("");
+    setButtonCaption("Registering...");
     fetch("http://localhost:8000/api/authentication/register", {
       method: "POST",
       mode: "cors",
@@ -50,45 +40,94 @@ export default function RegistrationForm() {
     })
       .then((response) => response.json())
       .then((data) => {
+        const { id, username } = data;
+        console.log(id, username);
         router.push("verify");
       })
       .catch((err) => {
+        setButtonCaption("Register");
         setSubmitError(err.message);
       });
   }, []);
 
   return (
     <>
-      <RemoteValidatedField
-        fieldName="username"
-        placeholder="Username"
-        setValidatedValue={setUsername}
-        schema={usernameSchema}
-        validationUrl="http://localhost:8000/api/authentication/exists/username"
-      />
-      <RemoteValidatedField
-        fieldName="email"
-        placeholder="Email"
-        setValidatedValue={setEmail}
-        schema={emailSchema}
-        validationUrl="http://localhost:8000/api/authentication/exists/email"
-      />
-      <LocalValidatedField
-        fieldName="firstName"
-        placeholder="First/Given Name"
-        setValidatedValue={setFirstName}
-        schema={nameSchema}
-      />
-      <LocalValidatedField
-        fieldName="surname"
-        placeholder="Surname/Family Name"
-        setValidatedValue={setSurname}
-        schema={nameSchema}
-      />
-      <button type="submit" disabled={!enableSubmit} onClick={submit}>
-        {buttonCaption}
-      </button>
-      <div className="submitError">{submitError}</div>
+      <h2>Register</h2>
+      <p>
+        Complete the registration form to receive an email with a magic link to
+        log in
+      </p>
+      <form
+        onSubmit={(ev) => {
+          ev.preventDefault();
+          submit();
+        }}
+      >
+        <div className="formField">
+          <label htmlFor="username">Username</label>
+          <i className="fa fa-user" aria-hidden="true"></i>
+          <input
+            type="text"
+            placeholder="Enter your desired Username"
+            name="username"
+            value={username}
+            onChange={(ev) => setUsername(ev.currentTarget.value)}
+          />
+        </div>
+        <div className="formField">
+          <label htmlFor="email">Email</label>
+          <i className="fa fa-envelope" aria-hidden="true"></i>
+          <input
+            placeholder="Enter your Email Address"
+            name="email"
+            type="email"
+            value={email}
+            onChange={(ev) => setEmail(ev.currentTarget.value)}
+          />
+        </div>
+        <div className="formField">
+          <label htmlFor="first_name">First/Given Name</label>
+          <i className="fa fa-address-card" aria-hidden="true"></i>
+          <input
+            placeholder="Enter your First/Given Name"
+            type="text"
+            name="first_name"
+            value={first_name}
+            onChange={(ev) => setFirstName(ev.currentTarget.value)}
+          />
+        </div>
+        <div className="formField">
+          <label htmlFor="surname">Surname/Family Name</label>
+          <i className="fa fa-address-card" aria-hidden="true"></i>
+          <input
+            placeholder="Enter your Surname/Family Name"
+            type="text"
+            name="surname"
+            value={surname}
+            onChange={(ev) => setSurname(ev.currentTarget.value)}
+          />
+        </div>
+        <div className="submitError">
+          {submitError ? (
+            <ul>
+              <li>{submitError}</li>
+            </ul>
+          ) : (
+            ""
+          )}
+        </div>
+        <div className="buttonContainer">
+          <button type="submit" disabled={!enableSubmit} onClick={submit}>
+            <i
+              className={[
+                "fa",
+                enableSubmit ? "fa-thumbs-up" : "fa-thumbs-down",
+              ].join(" ")}
+            ></i>{" "}
+            {buttonCaption}
+          </button>
+        </div>
+      </form>
     </>
   );
 }
