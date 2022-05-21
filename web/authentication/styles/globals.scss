@@ -1,0 +1,152 @@
+@import "./reset.scss";
+@import "./colours.scss";
+
+html,
+body {
+  font-family: "Lato", sans-serif;
+  background: var(--darkest);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 10rem;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+p {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  text-transform: none;
+}
+
+ul {
+  > li {
+    color: var(--lightest);
+  }
+
+  > :nth-child(odd) {
+    background-color: var(--mid-dark);
+  }
+
+  > :nth-child(even) {
+    background-color: var(--darker);
+  }
+}
+
+#container {
+  color: var(--lightest);
+  width: 100vw;
+  text-transform: uppercase;
+  display: grid;
+
+  .row {
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .list {
+    padding: 0rem;
+
+    li {
+      padding: 2rem;
+      text-align: left;
+      font-size: 2rem;
+
+      a {
+        display: grid;
+        grid-template-columns: 1fr 6fr;
+        color: white;
+        text-decoration: none;
+
+        i.fa {
+          text-align: center;
+        }
+      }
+      
+    }
+  }
+
+  > :nth-child(odd) {
+    background-color: var(--darker);
+  }
+
+  > :nth-child(even) {
+    background-color: var(--mid-light);
+  }
+}
+
+.footer {
+  text-align: center;
+  padding: 0.25rem;
+  width: 100vw;
+  color: var(--mid-dark);
+  background-color: var(--darkest) !important;
+}
+
+.formField {
+  display: grid;
+  grid-template-columns: 2.5fr 0.3fr 3fr;
+  line-height: 1.7rem;
+  padding: 0.3rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 1.2rem;
+
+  > i {
+    line-height: 1.7rem;
+  }
+
+  :first-child {
+    text-align:right;
+    margin-right: 0.5rem;
+  }
+
+  input {
+    background: transparent;
+    color: var(--lightest);
+    border: 0;
+    border-bottom: 2px solid var(--lightest);
+    font-size: 1.2rem;
+    margin-left: 0.5rem;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  #container {
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: max-content 1fr;
+
+    > :nth-child(odd) {
+      background-color: var(--mid-light);
+    }
+  
+    > :nth-child(even) {
+      background-color: var(--darker);
+    }
+  }
+
+  .footer {
+    position: absolute;
+    bottom: 0;
+  }
+}
+
+
