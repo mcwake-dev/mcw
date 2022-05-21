@@ -17,8 +17,7 @@ const seed = async (users) => {
         email VARCHAR NOT NULL,
         first_name VARCHAR NOT NULL,
         surname VARCHAR NOT NULL,
-        level user_level DEFAULT 'user', 
-        banned BOOLEAN DEFAULT FALSE
+        level user_level DEFAULT 'user'
     );`);
   const insert = format(
     `INSERT INTO users (username, email, first_name, surname) VALUES %L RETURNING *;`,

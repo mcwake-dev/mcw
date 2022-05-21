@@ -1271,9 +1271,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@mcw/validation", "workspace:lib/validation"],\
             ["eslint", "npm:8.15.0"],\
             ["eslint-config-next", "virtual:dad929f08279ea8f5b54f8814ea399fd451c2e63224cb5cf17ce86668d93193af323c717eb58107f6fc38af0ff10b974366bcd1dc3a8af9308b36e06283bdd12#npm:12.1.6"],\
+            ["fork-awesome", "npm:1.2.0"],\
             ["next", "virtual:dad929f08279ea8f5b54f8814ea399fd451c2e63224cb5cf17ce86668d93193af323c717eb58107f6fc38af0ff10b974366bcd1dc3a8af9308b36e06283bdd12#npm:12.1.6"],\
             ["react", "npm:18.1.0"],\
-            ["react-dom", "virtual:dad929f08279ea8f5b54f8814ea399fd451c2e63224cb5cf17ce86668d93193af323c717eb58107f6fc38af0ff10b974366bcd1dc3a8af9308b36e06283bdd12#npm:18.1.0"]\
+            ["react-dom", "virtual:dad929f08279ea8f5b54f8814ea399fd451c2e63224cb5cf17ce86668d93193af323c717eb58107f6fc38af0ff10b974366bcd1dc3a8af9308b36e06283bdd12#npm:18.1.0"],\
+            ["sass", "npm:1.52.1"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -4044,6 +4046,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["fork-awesome", [\
+        ["npm:1.2.0", {\
+          "packageLocation": "./.yarn/cache/fork-awesome-npm-1.2.0-baca18517d-473a6452d4.zip/node_modules/fork-awesome/",\
+          "packageDependencies": [\
+            ["fork-awesome", "npm:1.2.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["form-data", [\
         ["npm:4.0.0", {\
           "packageLocation": "./.yarn/cache/form-data-npm-4.0.0-916facec2d-01135bf867.zip/node_modules/form-data/",\
@@ -4576,6 +4587,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/ignore-by-default-npm-1.0.1-78ea10bc54-441509147b.zip/node_modules/ignore-by-default/",\
           "packageDependencies": [\
             ["ignore-by-default", "npm:1.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["immutable", [\
+        ["npm:4.0.0", {\
+          "packageLocation": "./.yarn/cache/immutable-npm-4.0.0-74b844f82e-4b5e9181e4.zip/node_modules/immutable/",\
+          "packageDependencies": [\
+            ["immutable", "npm:4.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -6190,7 +6210,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["postcss", "npm:8.4.5"],\
             ["react", "npm:18.1.0"],\
             ["react-dom", "virtual:dad929f08279ea8f5b54f8814ea399fd451c2e63224cb5cf17ce86668d93193af323c717eb58107f6fc38af0ff10b974366bcd1dc3a8af9308b36e06283bdd12#npm:18.1.0"],\
-            ["sass", null],\
+            ["sass", "npm:1.52.1"],\
             ["styled-jsx", "virtual:919a99c0c6e83a65b75b9f7b1e117c40ab08845ae5b337ae665e192c259b27c103f992e7a33ceb6abd628ac88cbbbe6d77a6054cac44b77be5a5deb5b0f6deb2#npm:5.0.2"]\
           ],\
           "packagePeers": [\
@@ -7301,6 +7321,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/safer-buffer-npm-2.1.2-8d5c0b705e-cab8f25ae6.zip/node_modules/safer-buffer/",\
           "packageDependencies": [\
             ["safer-buffer", "npm:2.1.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["sass", [\
+        ["npm:1.52.1", {\
+          "packageLocation": "./.yarn/cache/sass-npm-1.52.1-7f0eb7e72c-a0508c88b1.zip/node_modules/sass/",\
+          "packageDependencies": [\
+            ["sass", "npm:1.52.1"],\
+            ["chokidar", "npm:3.5.3"],\
+            ["immutable", "npm:4.0.0"],\
+            ["source-map-js", "npm:1.0.2"]\
           ],\
           "linkType": "HARD"\
         }]\
