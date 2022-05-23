@@ -770,6 +770,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@mcw/authentication-api@workspace:api/authentication"
   dependencies:
+    "@mcw/logging": 1.0.0
     "@mcw/validation": 1.0.0
     celebrate: ^15.0.1
     cookie-parser: ^1.4.6
@@ -806,6 +807,16 @@ __metadata:
   resolution: "@mcw/email@workspace:lib/email"
   dependencies:
     "@sendgrid/mail": ^7.6.2
+  languageName: unknown
+  linkType: soft
+
+"@mcw/logging@1.0.0, @mcw/logging@workspace:lib/logging":
+  version: 0.0.0-use.local
+  resolution: "@mcw/logging@workspace:lib/logging"
+  dependencies:
+    chalk: ^4.1.0
+    loglevel: ^1.8.0
+    loglevel-plugin-prefix: ^0.8.4
   languageName: unknown
   linkType: soft
 
@@ -4598,6 +4609,20 @@ __metadata:
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: eb835a2e51d381e561e508ce932ea50a8e5a68f4ebdd771ea240d3048244a8d13658acbd502cd4829768c56f2e16bdd4340b9ea141297d472517b83868e677f7
+  languageName: node
+  linkType: hard
+
+"loglevel-plugin-prefix@npm:^0.8.4":
+  version: 0.8.4
+  resolution: "loglevel-plugin-prefix@npm:0.8.4"
+  checksum: 5fe0632fa04263e083f87204107a06aa53e40a3537e08752539f5c0fd9a0ef112fe9ba6bdaed791502156c67a4ff7993a2b2871404615f0163f4c49649c362e4
+  languageName: node
+  linkType: hard
+
+"loglevel@npm:^1.8.0":
+  version: 1.8.0
+  resolution: "loglevel@npm:1.8.0"
+  checksum: 41aeea17de24aba8dba68084a31fe9189648bce4f39c1277e021bb276c3c53a75b0d337395919cf271068ad40ecefabad0e4fdeb4a8f11908beee532b898f4a7
   languageName: node
   linkType: hard
 

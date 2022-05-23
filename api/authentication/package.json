@@ -5,15 +5,16 @@
   "main": "index.js",
   "scripts": {
     "init:db": "psql -f ./db/init-dbs.sql",
-    "dev": "nodemon -- -r ./environment/development.js index.js",
+    "dev": "node -r ./environment/development.js db/run-seed.js && nodemon -- -r ./environment/development.js index.js",
     "seed:dev": "node -r ./environment/development.js db/run-seed.js",
     "seed:test": "node -r ./environment/testing.js db/run-seed.js",
-    "test": "jest --verbose=false"
+    "test": "node -r ./environment/testing.js db/run-seed.js && jest --verbose=false --forceExit"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@mcw/logging": "1.0.0",
     "@mcw/validation": "1.0.0",
     "celebrate": "^15.0.1",
     "cookie-parser": "^1.4.6",

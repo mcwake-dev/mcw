@@ -1,13 +1,26 @@
 require("../environment/testing");
 const request = require("supertest");
-const app = require("../app.js");
-const db = require("../db");
-
-afterAll(async () => {
-  db.end();
-});
+const Redis = require("ioredis");
 
 describe("Authentication", () => {
+  const redis = new Redis();
+  const db = require("../db");
+  const app = require("../app.js");
+
+  beforeAll(async () => {
+    await redis.del("::ffff:127.0.0.1:rate");
+  });
+
+  afterAll(async () => {
+    await new Promise((resolve) => {
+      redis.quit(() => {
+        resolve();
+      });
+    });
+    await new Promise((resolve) => setImmediate(resolve));
+    await db.end();
+  });
+
   describe("/api/authentication/pk", () => {
     it("should return a valid PEM public key", async () => {
       const response = await request(app).get("/api/authentication/pk");

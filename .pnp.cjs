@@ -29,6 +29,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:lib/email"\
       },\
       {\
+        "name": "@mcw/logging",\
+        "reference": "workspace:lib/logging"\
+      },\
+      {\
         "name": "@mcw/validation",\
         "reference": "workspace:lib/validation"\
       },\
@@ -48,6 +52,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@mcw/authentication-api", ["workspace:api/authentication"]],\
       ["@mcw/authentication-ui", ["workspace:web/authentication"]],\
       ["@mcw/email", ["workspace:lib/email"]],\
+      ["@mcw/logging", ["workspace:lib/logging"]],\
       ["@mcw/tool-generate-certs", ["workspace:tools/generate-certs"]],\
       ["@mcw/validation", ["workspace:lib/validation"]]\
     ],\
@@ -1256,6 +1261,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./api/authentication/",\
           "packageDependencies": [\
             ["@mcw/authentication-api", "workspace:api/authentication"],\
+            ["@mcw/logging", "workspace:lib/logging"],\
             ["@mcw/validation", "workspace:lib/validation"],\
             ["celebrate", "npm:15.0.1"],\
             ["cookie-parser", "npm:1.4.6"],\
@@ -1296,6 +1302,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@mcw/email", "workspace:lib/email"],\
             ["@sendgrid/mail", "npm:7.6.2"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@mcw/logging", [\
+        ["workspace:lib/logging", {\
+          "packageLocation": "./lib/logging/",\
+          "packageDependencies": [\
+            ["@mcw/logging", "workspace:lib/logging"],\
+            ["chalk", "npm:4.1.2"],\
+            ["loglevel", "npm:1.8.0"],\
+            ["loglevel-plugin-prefix", "npm:0.8.4"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -5877,6 +5895,24 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/lodash.merge-npm-4.6.2-77cb4416bf-ad580b4bdb.zip/node_modules/lodash.merge/",\
           "packageDependencies": [\
             ["lodash.merge", "npm:4.6.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["loglevel", [\
+        ["npm:1.8.0", {\
+          "packageLocation": "./.yarn/cache/loglevel-npm-1.8.0-521cbfe852-41aeea17de.zip/node_modules/loglevel/",\
+          "packageDependencies": [\
+            ["loglevel", "npm:1.8.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["loglevel-plugin-prefix", [\
+        ["npm:0.8.4", {\
+          "packageLocation": "./.yarn/cache/loglevel-plugin-prefix-npm-0.8.4-612472140b-5fe0632fa0.zip/node_modules/loglevel-plugin-prefix/",\
+          "packageDependencies": [\
+            ["loglevel-plugin-prefix", "npm:0.8.4"]\
           ],\
           "linkType": "HARD"\
         }]\
