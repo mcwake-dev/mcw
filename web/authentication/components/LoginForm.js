@@ -1,11 +1,40 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
+import { useRouter } from "next/router";
+
+import { validateEmail, login } from "../services/user.service";
 
 export default function LoginForm() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [buttonCaption, setButtonCaption] = useState("Request Login");
   const [submitError, setSubmitError] = useState("");
   const [enableSubmit, setEnableSubmit] = useState(false);
-  const submit = useCallback(() => {}, []);
+  const submit = useCallback(() => {
+    setSubmitError("");
+    setButtonCaption("Requesting Login...");
+    login(email)
+      .then((data) => {
+        if (data.success) {
+          router.push("verify");
+        }
+      })
+      .catch((err) => {
+        setButtonCaption("Request Login");
+        setSubmitError(err.message);
+      });
+  }, []);
+
+  useEffect(() => {
+    setSubmitError("");
+    validateEmail(email)
+      .then((data) => {
+        setEnableSubmit(data.success);
+      })
+      .catch((error) => {
+        setSubmitError(error.message);
+        setEnableSubmit(false);
+      });
+  }, [email]);
 
   return (
     <div className="row bg-mid-light" id="login">

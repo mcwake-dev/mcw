@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/router";
-import { userRemoteSchema } from "@mcw/validation/user.validation";
+
+import { validateUser } from "../services/user.service";
 
 export default function RegistrationForm() {
   const router = useRouter();
-  const schema = userRemoteSchema(process.env.NEXT_PUBLIC_VALIDATION_SERVER);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [first_name, setFirstName] = useState("");
@@ -12,43 +12,32 @@ export default function RegistrationForm() {
   const [enableSubmit, setEnableSubmit] = useState(false);
   const [buttonCaption, setButtonCaption] = useState("Register");
   const [submitError, setSubmitError] = useState("");
-
-  useEffect(() => {
-    setSubmitError("");
-    schema
-      .validateAsync({ username, email, first_name, surname })
-      .then((value) => {
-        setEnableSubmit(true);
-      })
-      .catch((error) => {
-        setSubmitError(error.message);
-        setEnableSubmit(false);
-      });
-  }, [username, email, first_name, surname]);
-
   const submit = useCallback(() => {
     setSubmitError("");
     setButtonCaption("Registering...");
-    fetch("http://localhost:8000/api/authentication/register", {
-      method: "POST",
-      mode: "cors",
-      cache: "no-cache",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, email, first_name, surname }),
-    })
-      .then((response) => response.json())
+    register({ username, email, first_name, surname })
       .then((data) => {
-        const { id, username } = data;
-        console.log(id, username);
-        router.push("verify");
+        if (data.success) {
+          router.push("verify");
+        }
       })
       .catch((err) => {
         setButtonCaption("Register");
         setSubmitError(err.message);
       });
   }, []);
+
+  useEffect(() => {
+    setSubmitError("");
+    validateUser({ username, email, first_name, surname })
+      .then((data) => {
+        setEnableSubmit(data.success);
+      })
+      .catch((error) => {
+        setSubmitError(error.message);
+        setEnableSubmit(false);
+      });
+  }, [username, email, first_name, surname]);
 
   return (
     <div className="row bg-darker" id="register">
