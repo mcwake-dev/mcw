@@ -1,6 +1,6 @@
 const { seed } = require("./seed");
 const { NODE_ENV } = process.env;
-const log = require("@mcw/logging");
+const { log } = require("@mcw/logging");
 const devData = require("./data/development");
 const lg = log.getLogger("RunSeed");
 const testData = require("./data/testing");
