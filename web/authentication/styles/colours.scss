@@ -1,74 +1,36 @@
 :root {
-    --lightest: #edf4fb;
-    --lighter: #c2dbf0;
-    --light: #85b7e2;
-    --mid-light: #4992d3;
-    --mid-dark: #296ca8;
-    --dark: #1a456b;
-    --darker: #153755;
-    --darkest: #102940;
-  }
-  
-  .text-lightest {
-    color: var(--lightest) !important;
-  }
-  
-  .text-lighter {
-    color: var(--lighter) !important; 
-  }
-  
-  .text-light {
-    color: var(--light) !important;  
-  }
-  
-  .text-mid-light {
-    color: var(--mid-light) !important;
-  }
-  
-  .text-mid-dark {
-    color: var(--mid-dark) !important;
-  }
-  
-  .text-dark {
-    color: var(--dark) !important;
-  }
-  
-  .text-darker {
-    color: var(--darker) !important;
-  }
-  
-  .text-darkest {
-    color: var(--darkest) !important;
-  }
-  
-  .bg-lightest {
-    background-color: var(--lightest) !important;
-  }
-  
-  .bg-lighter {
-    background-color: var(--lighter) !important;
-  }
-  
-  .bg-light {
-    background-color: var(--light) !important;
-  }
-  
-  .bg-mid-light {
-    background-color: var(--mid-light) !important;
-  }
-  
-  .bg-mid-dark {
-    background-color: var(--mid-dark) !important;
+  --dark: #272727;
+  --light-grey: #747474;
+  --light-orange: #FF652F;
+  --light-yellow: #FFE400;
+  --light-green: #14A76C;
   }
   
   .bg-dark {
-    background-color: var(--dark) !important;
+    background-color: var(--dark);
   }
-  
-  .bg-darker {
-    background-color: var(--darker) !important;
+
+  .text-yellow {
+    color: var(--light-yellow);
   }
-  
-  .bg-darkest {
-    background-color: var(--darkest) !important;
+
+  .text-orange {
+    color: var(--light-orange) !important;
   }
+
+  .border-yellow {
+    border-color: var(--light-yellow) !important;
+  }
+
+  .text-grey {
+    color: var(--light-grey);
+  }
+
+  .text-green {
+    color: var(--light-green) !important;
+  }
+
+  .border-grey {
+    border: 1px solid var(--light-grey);
+  }
+
