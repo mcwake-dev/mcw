@@ -1,10 +1,12 @@
 @import "./reset.scss";
 @import "./colours.scss";
+@import "./spacing.scss";
+@import "./form.scss";
+@import "./spinner.scss";
 
 html,
 body {
   font-family: "Lato", sans-serif;
-  background: var(--darkest);
 }
 
 .bold {
@@ -30,119 +32,59 @@ p {
   text-transform: none;
 }
 
-ul {
+#menu ul {
+  :first-child {
+    float: left;
+    a {
+      font-weight: bold;
+    }
+  }
+
   > li {
-    color: var(--lightest);
-  }
+    float: right;
+    padding: 0.5rem;
 
-  > :nth-child(odd) {
-    background-color: var(--mid-dark);
-  }
+    a {
+      text-decoration: none;
 
-  > :nth-child(even) {
-    background-color: var(--darker);
+      i {
+        padding-right: 0.5rem;
+      }
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
   }
 }
 
 #container {
-  color: var(--lightest);
   width: 100vw;
   text-transform: uppercase;
   display: grid;
-
-  .row {
-    padding: 1rem;
-    text-align: center;
-  }
-
-  .list {
-    padding: 0rem;
-
-    li {
-      padding: 2rem;
-      text-align: left;
-      font-size: 2rem;
-
-      a {
-        display: grid;
-        grid-template-columns: 1fr 6fr;
-        color: white;
-        text-decoration: none;
-
-        i.fa {
-          text-align: center;
-        }
-      }
-      
-    }
-  }
-
-  > :nth-child(odd) {
-    background-color: var(--darker);
-  }
-
-  > :nth-child(even) {
-    background-color: var(--mid-light);
-  }
-}
-
-.footer {
-  text-align: center;
-  padding: 0.25rem;
-  width: 100vw;
-  color: var(--mid-dark);
-  background-color: var(--darkest) !important;
-}
-
-.formField {
-  display: grid;
-  grid-template-columns: 2.5fr 0.3fr 3fr;
-  line-height: 1.7rem;
-  padding: 0.3rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  font-size: 1.2rem;
-
-  > i {
-    line-height: 1.7rem;
-  }
-
-  :first-child {
-    text-align:right;
-    margin-right: 0.5rem;
-  }
-
-  input {
-    background: transparent;
-    color: var(--lightest);
-    border: 0;
-    border-bottom: 2px solid var(--lightest);
-    font-size: 1.2rem;
-    margin-left: 0.5rem;
-  }
-}
-
-@media screen and (min-width: 1000px) {
-  #container {
-    height: 100vh;
-    width: 100vw;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: max-content 1fr;
-
-    > :nth-child(odd) {
-      background-color: var(--mid-light);
-    }
+  grid-template-areas: "menu   menu"
+                       "content content"
+                       "footer  footer";
+  grid-template-rows: 2rem minmax(calc(100vh - 4rem), 100%) 2rem;
+  grid-template-columns: 1fr;
   
-    > :nth-child(even) {
-      background-color: var(--darker);
-    }
+  #menu {
+    grid-area: menu;
+  }
+  
+  #content {
+    grid-area: content;
+    margin-bottom: 5rem;
   }
 
-  .footer {
-    position: absolute;
-    bottom: 0;
+  #footer {
+    grid-area: footer;
+    width: 100vw;
+    text-align: center;
+    padding: 0.5rem;
   }
 }
+
+
 
 
