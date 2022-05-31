@@ -1,6 +1,6 @@
 const db = require("../db");
 
-async function usernameExists(username) {
+async function usernameInUse(username) {
   try {
     const results = await db.query("SELECT * FROM users WHERE username = $1;", [
       username,
@@ -16,7 +16,7 @@ async function usernameExists(username) {
   }
 }
 
-async function emailExists(email) {
+async function emailInUse(email) {
   try {
     const results = await db.query("SELECT * FROM users WHERE email = $1;", [
       email,
@@ -50,7 +50,7 @@ async function register({ username, email, first_name, surname }) {
 }
 
 module.exports = {
-  usernameExists,
-  emailExists,
+  usernameInUse,
+  emailInUse,
   register,
 };
