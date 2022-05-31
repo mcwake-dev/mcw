@@ -1,0 +1,66 @@
+.formField {
+  display: grid;
+  grid-template-rows: 1.7rem 1fr;
+  grid-template-columns: 2.5fr 2rem 3fr;
+  line-height: 1.7rem;
+  padding: 0.3rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 1.2rem;
+
+  label {
+    text-transform: lowercase;
+  }
+
+  .icon-container {
+    justify-self: center;
+
+    i {
+      margin: 0.2rem;
+    }
+  }
+
+  .messages {
+    grid-column-start: 3;
+    grid-column-end: 4;
+    max-width: 25rem;
+    margin-left: 0.5rem;
+    text-transform: none;
+  }
+
+  :first-child {
+    text-align: right;
+    margin-right: 0.5rem;
+  }
+
+  input {
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--light-grey);
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-left: 0.5rem;
+    max-width: 23rem;
+
+    &:focus {
+      outline: none;
+      border-bottom: 1px solid white;
+    }
+  }
+
+  button {
+    background-color: transparent;
+    border: 0;
+    border-bottom: 5px dotted;
+    grid-column-start: 3;
+    max-width: 15rem;
+    text-align: center !important;
+    text-transform: lowercase;
+    font-size: 1.2rem;
+
+    &:disabled {
+      color: var(--light-grey) !important;
+      border-color: var(--light-grey) !important;
+    }
+  }
+}
