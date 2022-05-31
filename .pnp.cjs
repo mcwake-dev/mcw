@@ -1284,6 +1284,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./web/authentication/",\
           "packageDependencies": [\
             ["@mcw/authentication-ui", "workspace:web/authentication"],\
+            ["@mcw/logging", "workspace:lib/logging"],\
             ["@mcw/validation", "workspace:lib/validation"],\
             ["eslint", "npm:8.15.0"],\
             ["eslint-config-next", "virtual:dad929f08279ea8f5b54f8814ea399fd451c2e63224cb5cf17ce86668d93193af323c717eb58107f6fc38af0ff10b974366bcd1dc3a8af9308b36e06283bdd12#npm:12.1.6"],\

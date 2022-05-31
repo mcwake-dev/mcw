@@ -791,6 +791,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@mcw/authentication-ui@workspace:web/authentication"
   dependencies:
+    "@mcw/logging": "workspace:^"
     "@mcw/validation": 1.0.0
     eslint: 8.15.0
     eslint-config-next: 12.1.6
@@ -810,7 +811,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mcw/logging@1.0.0, @mcw/logging@workspace:lib/logging":
+"@mcw/logging@1.0.0, @mcw/logging@workspace:^, @mcw/logging@workspace:lib/logging":
   version: 0.0.0-use.local
   resolution: "@mcw/logging@workspace:lib/logging"
   dependencies:
