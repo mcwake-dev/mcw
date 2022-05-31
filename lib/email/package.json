@@ -3,6 +3,7 @@
   "packageManager": "yarn@3.2.0",
   "version": "1.0.0",
   "dependencies": {
+    "@mcw/validation": "1.0.0",
     "@sendgrid/mail": "^7.6.2"
   }
 }

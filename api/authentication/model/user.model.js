@@ -49,8 +49,33 @@ async function register({ username, email, first_name, surname }) {
   }
 }
 
+async function registerEmail({ email }) {
+  try {
+    await db.query(
+      "INSERT INTO users (email) VALUES ($1) ON CONFLICT DO NOTHING;",
+      [email]
+    );
+
+    const results = await db.query(
+      "SELECT id, level, email FROM users WHERE email = $1",
+      [email]
+    );
+
+    if (results.rows.length === 1) {
+      console.log(results.rows[0]);
+      return [null, results.rows[0]];
+    } else {
+      return [new Error("Unknown Database Error"), null];
+    }
+  } catch (err) {
+    console.log(err);
+    return [err, null];
+  }
+}
+
 module.exports = {
   usernameInUse,
   emailInUse,
   register,
+  registerEmail,
 };

@@ -1,10 +1,10 @@
 const express = require("express");
 const cors = require("cors");
-
 const { ratelimit } = require("./middleware/ratelimit.middleware");
 const router = require("./router/app.router.js");
 const app = express();
 
+app.set("trust proxy", 1);
 app.use(
   cors((req, callback) => {
     let corsOptions = { origin: false };

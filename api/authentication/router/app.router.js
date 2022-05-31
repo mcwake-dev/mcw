@@ -3,7 +3,7 @@ const { celebrate, Segments, errors, Joi } = require("celebrate");
 
 const router = express.Router();
 
-const { emailInUse, register } = require("../controller/user.controller");
+const { emailInUse, requestToken } = require("../controller/user.controller");
 
 const { emailSchema, userSchema } = require("@mcw/validation/user.validation");
 
@@ -18,9 +18,9 @@ router.get(
 );
 
 router.post(
-  "/api/authentication/register",
-  celebrate({ [Segments.BODY]: userSchema }),
-  register
+  "/api/authentication/request-token",
+  celebrate({ [Segments.BODY]: Joi.object({ email: emailSchema }) }),
+  requestToken
 );
 
 router.use(errors());

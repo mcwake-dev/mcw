@@ -13,10 +13,10 @@ const seed = async (users) => {
   await db.query(`CREATE TYPE user_level AS ENUM('user', 'administrator');`);
   await db.query(`CREATE TABLE users (
         id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-        username VARCHAR NOT NULL,
-        email VARCHAR NOT NULL,
-        first_name VARCHAR NOT NULL,
-        surname VARCHAR NOT NULL,
+        username VARCHAR,
+        email VARCHAR NOT NULL UNIQUE,
+        first_name VARCHAR,
+        surname VARCHAR,
         level user_level DEFAULT 'user'
     );`);
   const insert = format(
