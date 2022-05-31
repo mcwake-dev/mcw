@@ -6,11 +6,26 @@ const request = {
   },
 };
 
-export async function validateEmail(email) {
-  const response = await fetch("/api/validate-email", {
+export async function emailInUse(email) {
+  const response = await fetch("/api/email/in-use", {
     ...request,
     method: "POST",
     body: JSON.stringify({ email }),
+  });
+  const data = await response.json();
+
+  if (response.ok) {
+    return data;
+  } else {
+    throw new Error(`${data.message}`);
+  }
+}
+
+export async function usernameInUse(username) {
+  const response = await fetch("/api/username/in-use", {
+    ...request,
+    method: "POST",
+    body: JSON.stringify({ username }),
   });
   const data = await response.json();
 
