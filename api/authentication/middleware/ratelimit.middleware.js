@@ -1,5 +1,5 @@
 const Redis = require("ioredis");
-const log = require("@mcw/logging");
+const { log } = require("@mcw/logging");
 const redis = new Redis();
 
 const ratelimit = async (req, res, next) => {
