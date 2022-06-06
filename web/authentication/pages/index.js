@@ -1,14 +1,28 @@
 import { useCallback, useState } from "react";
+import { useRouter } from "next/router";
+
 import ValidatedFormField from "../components/ValidatedFormField";
-import { emailInUse } from "../services/user.service";
+import { emailInUse, requestRefreshToken } from "../services/user.service";
 import styles from "../styles/Home.module.scss";
 
 export default function Home() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState({});
 
   const submit = useCallback(() => {
-    alert("Oh dear");
+    requestRefreshToken(email)
+      .then((data) => {
+        router.push("verified");
+      })
+      .catch((err) => {
+        setErrors((current) => {
+          return {
+            ...errors,
+            submit: err.message,
+          };
+        });
+      });
   });
 
   return (
@@ -28,11 +42,6 @@ export default function Home() {
         <h3 className="text-grey bold">
           You'll need an account to get the most out of my apps
         </h3>
-        <p className="text-grey">
-          Enter your email address below. It will be stored securely and only
-          used to send magic links for login. If you don't have an account yet,
-          you can create one here.
-        </p>
         <form
           onSubmit={(ev) => {
             ev.preventDefault();
@@ -58,6 +67,7 @@ export default function Home() {
               Submit
             </button>
           </div>
+          {errors.submit}
         </form>
       </div>
     </div>
