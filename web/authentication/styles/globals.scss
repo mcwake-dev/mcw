@@ -62,16 +62,17 @@ p {
   width: 100vw;
   text-transform: uppercase;
   display: grid;
-  grid-template-areas: "menu   menu"
-                       "content content"
-                       "footer  footer";
+  grid-template-areas:
+    "menu"
+    "content"
+    "footer";
   grid-template-rows: 2rem minmax(calc(100vh - 4rem), 100%) 2rem;
   grid-template-columns: 1fr;
-  
+
   #menu {
     grid-area: menu;
   }
-  
+
   #content {
     grid-area: content;
     margin-bottom: 5rem;
@@ -84,7 +85,3 @@ p {
     padding: 0.5rem;
   }
 }
-
-
-
-
