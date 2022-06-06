@@ -1,9 +1,16 @@
-const app = require("./app");
-const { log } = require("@mcw/logging");
 const { PORT } = process.env;
+const { log } = require("@mcw/logging");
+const setupConnection = require("./db/connection");
+const setupApp = require("./app");
+const setupModel = require("./model/token.model");
 
-app.listen(PORT, () => {
+(async () => {
   const lg = log.getLogger("api/authentication");
+  const { db } = await setupConnection();
+  const AuthenticationModel = await setupModel({ db });
+  const app = await setupApp({ log, model: AuthenticationModel });
 
-  lg.info(`Running on ${PORT}`);
-});
+  app.listen(PORT, async () => {
+    lg.info(`Running on ${PORT}`);
+  });
+})();

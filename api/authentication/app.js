@@ -1,24 +1,78 @@
 const express = require("express");
-const cors = require("cors");
-const { ratelimit } = require("./middleware/ratelimit.middleware");
-const router = require("./router/app.router.js");
-const app = express();
+const cookieParser = require("cookie-parser");
+const helmet = require("helmet");
 
-app.set("trust proxy", 1);
-app.use(
-  cors((req, callback) => {
-    let corsOptions = { origin: false };
+const setupController = require("./controller/user.controller");
+const { cors } = require("@mcw/middleware/cors.middleware");
+const { ratelimit } = require("@mcw/middleware/ratelimit.middleware");
+const {
+  emailPresent,
+  emailValid,
+} = require("@mcw/middleware/email.middleware");
+const { jtiPresent, jtiValid } = require("@mcw/middleware/jti.middleware");
+const {
+  authorizationHeaderPresent,
+  authorizationHeaderValid,
+} = require("@mcw/middleware/token.middleware");
+const { errorHandler } = require("@mcw/middleware/error.middleware");
+const { logRequest } = require("@mcw/middleware/log-request.middleware");
+const { generateJti } = require("@mcw/cryptographic");
+const { tokenValid } = require("../../lib/middleware/token.middleware");
 
-    if (process.env.ALLOWLIST.indexOf(req.header("Origin")) !== -1) {
-      corsOptions = { origin: true };
+module.exports = async ({ model }) => {
+  const app = express();
+  const { requestLoginToken } = await setupController({
+    model,
+    app,
+  });
+
+  app.use(cookieParser(generateJti()));
+  app.use(helmet());
+  app.set("trust proxy", 1);
+  app.use(cors);
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
+  app.use(ratelimit);
+  app.use(logRequest);
+  app.post(
+    "/api/authentication/request-login-token",
+    emailPresent,
+    emailValid,
+    async (req, res) => {
+      try {
+        const { email } = req.body;
+        const { jti } = await requestLoginToken({
+          email,
+          ip: req.headers["x-forwarded-for"] || req.socket.remoteAddress,
+        });
+
+        res.cookie("jti", jti, {
+          secure: process.env.NODE_ENV !== "development",
+          httpOnly: true,
+          sameSite: true,
+          path: "/",
+          signed: true,
+        });
+        res.sendStatus(201);
+      } catch (err) {
+        res.status(400).send({ message: err.message });
+      }
     }
+  );
 
-    callback(null, corsOptions);
-  })
-);
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(ratelimit);
-app.use(router);
+  app.get(
+    "/api/authentication/request-refresh-token",
+    jtiPresent,
+    jtiValid,
+    authorizationHeaderPresent,
+    authorizationHeaderValid,
+    tokenValid,
+    async (req, res) => {
+      res.sendStatus(200);
+    }
+  );
 
-module.exports = app;
+  app.use(errorHandler);
+
+  return app;
+};
