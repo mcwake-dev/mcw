@@ -1268,7 +1268,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@mcw/authentication-ui", "workspace:web/authentication"],\
             ["@mcw/logging", "workspace:lib/logging"],\
-            ["dayjs", "npm:1.11.3"],\
             ["eslint", "npm:8.15.0"],\
             ["eslint-config-next", "virtual:dad929f08279ea8f5b54f8814ea399fd451c2e63224cb5cf17ce86668d93193af323c717eb58107f6fc38af0ff10b974366bcd1dc3a8af9308b36e06283bdd12#npm:12.1.6"],\
             ["fork-awesome", "npm:1.2.0"],\
@@ -2970,13 +2969,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/dayjs-npm-1.11.2-644b12fe04-78f8bd04a9.zip/node_modules/dayjs/",\
           "packageDependencies": [\
             ["dayjs", "npm:1.11.2"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:1.11.3", {\
-          "packageLocation": "./.yarn/cache/dayjs-npm-1.11.3-88985d494e-c87e06b562.zip/node_modules/dayjs/",\
-          "packageDependencies": [\
-            ["dayjs", "npm:1.11.3"]\
           ],\
           "linkType": "HARD"\
         }]\
