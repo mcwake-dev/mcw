@@ -1,27 +1,25 @@
-import { useCallback, useState } from "react";
-import { useRouter } from "next/router";
+import { useCallback, useState, useEffect } from "react";
 
-import ValidatedFormField from "../components/ValidatedFormField";
-import { emailInUse, requestRefreshToken } from "../services/user.service";
+import { requestLoginToken } from "../services/authentication.service";
 import styles from "../styles/Home.module.scss";
 
 export default function Home() {
-  const router = useRouter();
   const [email, setEmail] = useState("");
-  const [errors, setErrors] = useState({});
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const submit = useCallback(() => {
-    requestRefreshToken(email)
-      .then((data) => {
-        router.push("verified");
+    setLoading(true);
+    requestLoginToken(email)
+      .then(() => {
+        setSuccess(true);
       })
       .catch((err) => {
-        setErrors((current) => {
-          return {
-            ...errors,
-            submit: err.message,
-          };
-        });
+        setError(JSON.stringify(err));
+      })
+      .finally(() => {
+        setLoading(false);
       });
   });
 
@@ -38,37 +36,55 @@ export default function Home() {
         </h3>
       </div>
       <div id={styles.form}>
-        <h2 className="text-yellow bold">Let's Get Started</h2>
-        <h3 className="text-grey bold">
-          You'll need an account to get the most out of my apps
-        </h3>
-        <form
-          onSubmit={(ev) => {
-            ev.preventDefault();
-            submit();
-          }}
-        >
-          <ValidatedFormField
-            valueName="email"
-            value={email}
-            setValue={setEmail}
-            placeholder="Enter your email address"
-            ifTrueMessage="Please click or tap Submit to get your magic link"
-            ifFalseMessage="Please complete the form below to get your magic link"
-            validationService={emailInUse}
-            setErrors={setErrors}
-          />
-          <div className="formField">
-            <button
-              className="text-yellow border-yellow"
-              type="submit"
-              disabled={errors.email}
+        {success ? (
+          <>
+            <h2 className="text-yellow bold">You've Got Mail!</h2>
+            <h3 className="text-grey bold">
+              Please check your email Inbox and Junk Mail for the Magic Link
+            </h3>
+            <div className="centered">
+              <button
+                className="text-orange"
+                onClick={(ev) => {
+                  setSuccess(false);
+                }}
+              >
+                Try Again
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            <h2 className="text-yellow bold">Let's Get Started</h2>
+            <h3 className="text-grey bold">
+              You'll need an account to get the most out of my apps
+            </h3>
+            <form
+              onSubmit={(ev) => {
+                ev.preventDefault();
+                submit();
+              }}
             >
-              Submit
-            </button>
-          </div>
-          {errors.submit}
-        </form>
+              <div className="formField">
+                <label htmlFor="email">Email</label>
+                <input
+                  name="email"
+                  type="email"
+                  value={email}
+                  onChange={(ev) => setEmail(ev.currentTarget.value)}
+                  required="required"
+                />
+              </div>
+
+              <div className="centered">
+                <button className="text-yellow" type="submit">
+                  {loading && <i className="fa fa-cog fa-spin"></i>} Submit
+                </button>
+              </div>
+              {error}
+            </form>
+          </>
+        )}
       </div>
     </div>
   );
