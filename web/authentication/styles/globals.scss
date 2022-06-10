@@ -7,6 +7,11 @@
 html,
 body {
   font-family: "Lato", sans-serif;
+  color: var(--light-grey);
+}
+
+input {
+  color: var(--light-grey);
 }
 
 .bold {
@@ -84,4 +89,17 @@ p {
     text-align: center;
     padding: 0.5rem;
   }
+}
+
+.centered {
+  text-align: center;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  width: 100%;
+}
+
+.centered > * {
+  width: 100%;
 }
