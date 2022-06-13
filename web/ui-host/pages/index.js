@@ -1,9 +1,10 @@
 import { useCallback, useState, useEffect } from "react";
 
 import { requestLoginToken } from "../services/authentication.service";
-import styles from "../styles/Home.module.scss";
 
-export default function Home() {
+import styles from "../styles/modules/Home.module.scss";
+
+export default function Home({ posts }) {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);

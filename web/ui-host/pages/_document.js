@@ -20,6 +20,12 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=Lato:wght@400;900&display=swap"
           rel="stylesheet"
         />
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+        <script //eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{
+            __html: `mermaid.initialize({startOnLoad: true})`,
+          }}
+        ></script>
       </Head>
       <body>
         <Main />

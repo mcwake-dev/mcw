@@ -8,7 +8,7 @@ export default function SetToken() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     authCtx
-      .getRefreshToken(params.refresh)
+      .getRefreshToken(params.login)
       .then(() => {
         console.log(window.sessionStorage.getItem("refresh"));
       })

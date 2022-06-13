@@ -2,7 +2,7 @@
 @import "./colours.scss";
 @import "./spacing.scss";
 @import "./form.scss";
-@import "./spinner.scss";
+@import "./timeline.scss";
 
 html,
 body {
@@ -48,7 +48,7 @@ p {
   > li {
     float: right;
     padding: 0.5rem;
-
+    margin-top: 0.5rem;
     a {
       text-decoration: none;
 
@@ -58,7 +58,11 @@ p {
     }
 
     a:hover {
-      text-decoration: underline;
+      color: var(--light-green);
+
+      i {
+        color: var(--light-yellow);
+      }
     }
   }
 }
@@ -71,7 +75,7 @@ p {
     "menu"
     "content"
     "footer";
-  grid-template-rows: 2rem minmax(calc(100vh - 4rem), 100%) 2rem;
+  grid-template-rows: 4rem minmax(calc(100vh - 6rem), auto) 2rem;
   grid-template-columns: 1fr;
 
   #menu {

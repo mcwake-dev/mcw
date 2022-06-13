@@ -1,0 +1,25 @@
+---
+title: "A @unique gotcha with Prisma and MongoDB"
+tags: ["typescript", "prisma", "db"]
+draft: true
+---
+
+Prisma allows you to specify that a field must be unique, like below:
+
+```
+model User {
+    ...
+    email   String  @unique
+    ...
+}
+```
+
+However, Prisma itself doesn't enforce this constraint, the database does. To do this, it is critical that you run the following command:
+
+```
+prisma db push
+```
+
+This instructs Prisma to create an index on the table or collection, and means that unique constraints will actually be enforced.
+
+References: [Prisma on Github](https://github.com/prisma/prisma/issues/6727)

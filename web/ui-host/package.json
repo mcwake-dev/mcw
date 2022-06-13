@@ -1,5 +1,5 @@
 {
-  "name": "@mcw/authentication-ui",
+  "name": "@mcw/ui-host",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,11 +10,19 @@
   },
   "dependencies": {
     "@mcw/logging": "workspace:^",
+    "@mdx-js/loader": "next",
+    "@mdx-js/react": "next",
+    "@reach/disclosure": "^0.17.0",
+    "@reach/tooltip": "^0.17.0",
     "fork-awesome": "^1.2.0",
+    "gray-matter": "^4.0.3",
     "next": "12.1.6",
     "react": "18.1.0",
     "react-dom": "18.1.0",
-    "sass": "^1.52.1"
+    "rehype-highlight": "^5.0.2",
+    "remark-frontmatter": "^4.0.1",
+    "sass": "^1.52.1",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "eslint": "8.15.0",
