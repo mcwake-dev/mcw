@@ -1,0 +1,151 @@
+---
+title: JWT Authentication Done Right
+tags: ["security"]
+image: "/img/posts/padlock.jpg"
+---
+
+import Post from "../../../components/blog/Post";
+import PostReference from "../../../components/blog/PostReference";
+import Mermaid from "../../../components/common/Mermaid";
+
+<Post backgroundImage="padlock.jpg" title="JWT Authentication Done Right" author="Matthew C Wake">
+
+If you're wanting to follow a microservices approach to developing an
+application, authentication is one of those things that can get very messy
+very quickly. If you're only developing an app that's going to deal with a
+relatively small number of users, then wiring up a session store is easy
+enough, using some form of database to store user sessions, then checking this
+store every time a user tries to access privileged functions.
+
+However, this means you're hitting some sort of database with every request.
+While there are databases like Redis (the makers of which produced a very long blog post about why using Redis is much better than using JWT, oddly enough) which are ideal for this sort of use
+case, this still leaves you with that one database that is being constantly
+harassed for information, and a single point of failure for your entire
+authentication mechanism, which goes against the whole point of a microservice
+architecture.
+
+Enter JSON Web Tokens, a signed, verifiable lump of JSON that can be passed in the Authorization header and used to allow any microservice with the key to verify a user independently of any other service, time-limited with an expiry date. Perfect! But alas in the Wild West of Internet Tutorials, there are a great many tutorials for newcomers to JWT that
+start and stop at this point, ignoring a whole mess of security problems that could leave these tokens wide open to abuse. Fortunately, the Open Web Application Security Project has several recommendations which can drastically ameliorate these issues.
+
+{/* prettier-ignore */}
+<Mermaid graphDefinition={`
+sequenceDiagram
+  participant User
+  participant Client
+  participant API
+  User->>Client: Provides login credentials
+  Client->>API: Requests token
+  API->>API: Generates token
+  API-->>Client: Returns token
+  Client-->>User: Confirms authentication
+  User->>Client: Requests privileged resource
+  Client->>API: Sends token on each request
+  API->>API: Verifies token
+  API-->>Client: Returns requested resources
+  Client-->>User: Views requested resources
+`}/>
+
+<h2>Making JWTs Safer</h2>
+<h3>Signature</h3>
+First and foremost, JWTs are not worth the digital paper they are written on unless they are verified with some sort of signature. They aren't kidding about the 'JSON' bit - JWTs are just lumps of JSON data, and without a signature they can
+easily be forged to give anyone any privilege or identity they so desire. When creating your JWT, it is absolutely critical that an algorithm for signing the token is set:
+```js 
+  {
+    ...
+    alg: "RS512",
+    ...
+  }
+```
+Personally, I prefer using RSA encryption. This gives you a public key for verifying JWTs that doesn't need to be secret at all in order to verify JWTs, and a private key set as an environment variable for signing JWTs. Having this neat split allows you to freely share the ability to verify a token to any service, or even services developed by others, without having to worry that you've shared your key with a company's disgruntled soon to be ex-employee with a grudge. The <a href="https://www.npmjs.com/package/node-forge">node-forge</a> package provides a variety of cryptographic tools for generating certificates for this purpose.
+
+<h3>Expiry</h3>
+The next quick and easy way to ensure that the impact of a compromised JWT is to set the expiry. This can be set as below:
+```js
+{
+  ...
+  exp: 1235758483483,
+  ...
+}
+```
+The exp property expects a number of seconds since the epoch (1st January 1970) and once that time is reached, the token is no longer valid. The signature coupled with the expiry ensures that this value cannot be changed.
+
+<h3>JTI and Cookies</h3>
+Even with a signed and expirable token, a nefarious user who has injected malicious JavaScript into your app could still gain access to the token and wreak a fair bit of havoc before someone notices. But not everything held by a web browser is accessible from JavaScript. A secure, HTTPOnly, Same-Site cookie can be sent alongside a token with a randomly-generated ID for the token. A special field exists for this purpose in the JWT specification, but for the sake of security the JTI field should be set to a hashed version of the ID in the cookie:
+```js
+{
+  ...
+  jti: "fewjaklfewaiofewio_fewafewafdsfewafewdsfew", // Just an example
+  ...
+}
+```
+A "real" user's web browser can send both the token and cookie in a request, but an attacker, even one who has implanted malicious JavaScript into your app, will not have access to the HTTPOnly cookie, and so the request can be intercepted and rejected. Node.js inbuilt crypto module can generate random strings to serve as secure IDs.
+
+<h3>Resource/Refresh</h3>
+Next up is something which ostensibly adds complexity, but drastically limits the
+damage a determined attacker can cause if they were able to get both a valid token
+and the JTI. This is to implement the concept of refresh tokens, and resource tokens.
+This is best illustrated with a revised diagram.
+
+<Mermaid
+  graphDefinition={`
+sequenceDiagram
+  participant Client
+  participant Resource API
+  participant Refresh API
+  Client->>Refresh API: Send Authentication Information
+  Refresh API->>Refresh API: Authenticate Client
+  Refresh API-->>Client: Send Refresh Token
+  Client->>Refresh API: Use Refresh Token to request Resource Token
+  Refresh API->>Refresh API: Verify Refresh Token
+  Refresh API-->>Client: Send Resource Token
+  Client->>Resource API: Request access to Resource
+  Resource API->>Resource API: Verify Resource Token
+  Resource API-->>Client: Send requested Resource
+`}
+/>
+
+As you can see in the diagram above, we now use multiple JWTs, one to grant access to resource tokens, and one to access the resources themselves. The idea here is that while a refresh token would be long-lived, a resource token will expire much sooner, and it is only the resource token which grants access to any API operations. By having each of your microservices use their own resource token, an attacker now has to compromise multiple tokens and multiple cookies across multiple requests to gain full access to your APIs, and this access is likely to be short lived.
+
+<h3>Revocation</h3>
+The last step to secure JWT authentication is to provide some means of revoking a
+token. As a brute-force approach we could just generate new keys, which would cause
+verification failure of all tokens and require all users to re-authenticate. While
+this is good practice on occasion, it wouldn't be great to take this step every time
+someone was fooled by a phishing scam. While one of the main benefits of JWTs is
+that they do not require constant access to a database, ultimately we need to implement
+some way of storing tokens which have been revoked for whatever reason, either through
+the user simply logging out, or due to detection of unusual activity.{" "}
+
+However, we do not need to store this data permanently. Because we are good coders who definitely didn't skip past the section on Signatures and Expiry, we know exactly when a revoked token becomes useless, and so we only need to store this information until that time. Redis has the EXPIRE command which will automatically delete keys and values after a certain amount of time, and MongoDB supports creating indexes which on expiration will delete the associated document. I've used both, they both work equally reliably (although MongoDB's timing will not be precisely to the second).
+
+<h2>Summary</h2>
+To sum up, JWTs can be a safe, secure method of authenticating requests, so long
+as you follow these recommendations. But once a database is required for revocation
+information and resource/refresh tokens come into play there is definitely an argument
+to be made for whether the benefits of stateless authentication outweigh the risks
+and the complexity of implementing such a system - because you basically have a session
+store at that point.
+
+References:
+
+<PostReference
+  title="Critical Vulnerabilities in JSON Web Token Libraries"
+  href="https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/"
+/>
+
+<PostReference
+  title="OWASP on JWT"
+  href="https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html"
+/>
+
+<PostReference
+  title="JSON Web Tokens (JWT) are Dangerous for User Sessions—Here’s a Solution"
+  href="https://redis.com/blog/json-web-tokens-jwt-are-dangerous-for-user-sessions/"
+/>
+
+<PostReference
+  title="Photo by FLY:D"
+  href="https://unsplash.com/@flyd2069?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+/>
+
+</Post>

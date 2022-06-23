@@ -1,0 +1,41 @@
+---
+title: "Prisma with NX Monorepo"
+tags: ["nx", "typescript", "prisma"]
+image: "/img/posts/prism.jpg"
+---
+
+import Post from "../../../components/blog/Post";
+import PostReference from "../../../components/blog/PostReference";
+
+<Post backgroundImage="prism.jpg" title="Prisma with NX Monorepo" author="Matthew C Wake">
+
+Microservices and micro-frontends are a neat way of splitting big clunky webapps into neat, manageable chunks. Monorepos are a neat way of sharing code between different microservices, and spare you the hassle of bouncing between repo A and B and C. NX is a neat tool for managing your monorepo. Prisma is a versatile and type-safe ORM. But try to use them all together, and there's a problem...
+
+By default when running `prisma generate` any previously generated Prisma client
+in your `node_modules` folder. That unfortunately means that if you have
+multiple microserves with multiple Prisma clients, you end up overwriting the
+client for service A with the client for service B.
+However, there is fortunately a simple solution to this, found on [Prisma's Github](https://github.com/prisma/prisma/issues/7470).
+In your `schema.prisma` file, you can add an output line in your `generator` block:
+
+```
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../node_modules/@prisma/client/[a descriptive, unique name for your client]"
+}
+```
+
+You can then import this as normal:
+
+```
+import { PrismaClient } from "@prisma/client/[your descriptive, unique name for your client]";
+```
+
+And away you go, Prisma microservices that won't overwrite each other.
+
+<PostReference
+  title="Photo by Michael Dziedzic"
+  href="https://unsplash.com/s/photos/prism?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+/>
+
+</Post>

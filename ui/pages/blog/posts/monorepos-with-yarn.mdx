@@ -1,0 +1,31 @@
+---
+title: "A-version to showing up in Yarn monorepos"
+tags: ["nodejs", "yarn"]
+image: "/img/posts/unicycle.jpg"
+---
+
+import Post from "../../../components/blog/Post";
+import PostReference from "../../../components/blog/PostReference";
+
+<Post backgroundImage="align.jpg" title="A-version to showing up in Yarn monorepos" author="Matthew C Wake">
+    I've been using Yarn as a package manager for maintaining my shiny new monorepo. Picking up new workspaces should simply be a case of something like below in your <code>package.json</code>:
+    ```js
+        {
+            ...
+            "workspaces":[
+                "api/*",
+                "lib/*",
+                "tools/*",
+                "ui"
+            ]
+            ...
+        }
+    ```
+    ...and then for each subject you just do <code>yarn init</code> and then add the dependencies as normal, right? Almost.
+
+    In order to be a functioning monorepo, Yarn checks version numbers of each package against the specified dependencies. To do that, it needs a version number. And guess what <code>yarn init</code> doesn't add by default? Version number.
+
+    So if you're working with a monorepo and can't figure out which it won't recognise the existence of one of your sub-projects, chances are you might just be missing the version number.
+
+<PostReference title="Photo by Evan Clark" href="https://unsplash.com/s/photos/unicycle?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" />
+</Post>
