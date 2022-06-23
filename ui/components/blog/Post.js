@@ -11,6 +11,14 @@ export default function Post({ backgroundImage, title, author, children }) {
         padding: 2rem;
         display: grid;
         grid-template-columns: 0.1fr 1fr 0.1fr;
+
+        @media screen and (min-width: 1000px) {
+          grid-template-columns: 0.3fr 1fr 0.3fr;
+        }
+
+        @media screen and (min-width: 1920px) {
+          grid-template-columns: 0.5fr 1fr 0.5fr;
+        }
       `}
     >
       <main
