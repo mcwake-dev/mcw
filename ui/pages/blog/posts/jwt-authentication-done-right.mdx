@@ -56,7 +56,7 @@ easily be forged to give anyone any privilege or identity they so desire. When c
     ...
   }
 ```
-Personally, I prefer using RSA encryption. This gives you a public key for verifying JWTs that doesn't need to be secret at all in order to verify JWTs, and a private key set as an environment variable for signing JWTs. Having this neat split allows you to freely share the ability to verify a token to any service, or even services developed by others, without having to worry that you've shared your key with a company's disgruntled soon to be ex-employee with a grudge. The <a href="https://www.npmjs.com/package/node-forge">node-forge</a> package provides a variety of cryptographic tools for generating certificates for this purpose.
+Personally, I prefer using RSA encryption. This gives you a public key for verifying JWTs that doesn't need to be secret at all in order to verify JWTs, and a private key set as an environment variable for signing JWTs. Having this neat split allows you to freely share the ability to verify a token to any service, or even services developed by others, without having to worry that you've shared your key with a company's disgruntled soon to be ex-employee with a grudge. The node-forge package provides a variety of cryptographic tools for generating certificates for this purpose.
 
 <h3>Expiry</h3>
 The next quick and easy way to ensure that the impact of a compromised JWT is to set the expiry. This can be set as below:
