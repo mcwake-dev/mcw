@@ -18,6 +18,7 @@ const { errorHandler } = require("@mcw/middleware/error.middleware");
 const { logRequest } = require("@mcw/middleware/log-request.middleware");
 const { generateJti } = require("@mcw/cryptographic");
 const { tokenValid } = require("../../lib/middleware/token.middleware");
+const { generateRandomString } = require("../../lib/cryptographic");
 
 module.exports = async ({ model }) => {
   const app = express();
@@ -26,7 +27,7 @@ module.exports = async ({ model }) => {
     app,
   });
 
-  app.use(cookieParser(generateJti()));
+  app.use(cookieParser(generateRandomString(100)));
   app.use(helmet());
   app.set("trust proxy", 1);
   app.use(cors);

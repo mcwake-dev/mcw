@@ -2,7 +2,7 @@ const dayjs = require("dayjs");
 
 const {
   generateHash,
-  generateJti,
+  generateRandomString,
   generateToken,
 } = require("@mcw/cryptographic");
 const { sendMail } = require("@mcw/email");
@@ -11,7 +11,7 @@ const { log } = require("@mcw/logging");
 
 module.exports = ({ model: { isTokenBlocked } }) => {
   async function requestLoginToken({ email, ip }) {
-    const jti = generateJti();
+    const jti = generateRandomString(100);
     const hashedJti = generateHash(jti);
     const loginToken = generateToken({
       subject: email,
@@ -34,6 +34,7 @@ module.exports = ({ model: { isTokenBlocked } }) => {
         html,
       },
     };
+
     await sendMail(emailProps);
 
     return { jti };
