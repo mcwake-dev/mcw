@@ -1,32 +1,27 @@
-/** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
+import Link from "next/link";
+import { useAtom } from "jotai";
 
-import Brand from "./Brand";
+import isMenuOpenAtom from "../../atoms/menu-open.atom";
+import Brand from "../../components/common/Brand";
+import MenuButton from "./MenuButton";
 import MenuItem from "./MenuItem";
 
-export default function Menu({ props }) {
+export default function Menu() {
+  const [isMenuOpen] = useAtom(isMenuOpenAtom);
+  const menuButtonId = "menu-button";
+
   return (
-    <nav
-      css={css`
-        grid-area: menu;
-        padding: 1rem;
-      `}
-    >
-      <ul
-        css={css`
-          list-style: none;
-        `}
-      >
-        <Brand />
-        <MenuItem href="/experience" title="Experience" icon="fa-code" />
-        <MenuItem
-          href="https://github.com/mcwake-dev"
-          title="Github"
-          icon="fa-github"
-          newWindow={true}
-        />
-        <MenuItem href="/blog/latest" title="Blog" icon="fa-github" />
-      </ul>
+    <nav className="menu">
+      <Brand text1="mcw" text2="portfolio" />
+      <MenuButton id={menuButtonId} />
+      {isMenuOpen && (
+        <ul id="menu" role="menu" aria-labelledby={menuButtonId}>
+          <MenuItem href="/" title="Home" />
+          <MenuItem href="/about" title="About" />
+          <MenuItem href="/blog" title="Blog" />
+          <MenuItem href="/projects" title="Projects" />
+        </ul>
+      )}
     </nav>
   );
 }
