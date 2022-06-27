@@ -1,0 +1,29 @@
+@import "./reset.scss";
+@import "./menu.scss";
+@import "./brand.scss";
+
+body {
+  background-color: #0c0032;
+  font-size: 1.5rem;
+}
+
+.fa {
+  color: #240090;
+}
+
+.bright {
+  color: white;
+  font-weight: bold;
+}
+
+.dim {
+  color: #3500d3;
+}
+
+footer {
+  background-color: #190061;
+  font-size: 1rem;
+  padding: 0.3rem;
+  text-align: center;
+  color: #240090;
+}
