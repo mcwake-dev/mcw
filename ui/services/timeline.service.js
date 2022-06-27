@@ -81,26 +81,26 @@ export default () => {
 
     {
       title: "Data Structures",
-      year: 2005,
+      year: "2005",
       description: "Developed queue, stack and linked list using pointers",
       technologies: ["C"],
     },
     {
-      year: 2005,
+      year: "2005",
       title: "Library Management System",
       description:
         "As part of a team, developed library and book management system",
       technologies: ["asp", "oracle"],
     },
     {
-      year: 2005,
+      year: "2005",
       title: "Fansite",
       description:
         "Developed a fan site for a television series, following accessibility guidelines and using the W3C accessibility tools",
       technologies: ["html", "css"],
     },
     {
-      year: 2004,
+      year: "2004",
       title: "Inventory Management System",
       description: "Developed prototype inventory management CLI",
       technologies: ["C++"],

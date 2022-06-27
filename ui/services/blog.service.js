@@ -35,7 +35,17 @@ export const getPosts = (pageIndex) => {
       const { data, content } = matter(fileContent);
       const slug = file.name.replace(/.mdx$/, "");
 
-      return { data, content, slug, date: fileData.mtime.toString() };
+      return {
+        data,
+        content,
+        slug,
+        date: new Date(fileData.birthtime).getTime(),
+      };
+    })
+    .sort((a, b) => {
+      console.log(a.data.title, a.date);
+      console.log(b.data.title, b.date);
+      return a.date > b.date;
     });
 
   return filterPostsByPageIndex(posts, pageIndex);

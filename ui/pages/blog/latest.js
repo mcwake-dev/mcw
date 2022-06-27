@@ -2,7 +2,7 @@
 import { css } from "@emotion/react";
 import Link from "next/link";
 
-import { getPosts } from "../../services/blog-utils";
+import { getPosts } from "../../services/blog.service";
 
 export default function Latest({ posts }) {
   return (

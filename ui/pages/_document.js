@@ -1,3 +1,5 @@
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 import { Html, Head, Main, NextScript } from "next/document";
 
 export default function Document() {
@@ -24,7 +26,6 @@ export default function Document() {
           rel="stylesheet"
           href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css"
         />
-        <link href="./styles/reset.css" rel="stylesheet" />
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
         <script //eslint-disable-next-line react/no-danger

@@ -1,90 +1,46 @@
-/** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-import { useState } from "react";
+import AboutSquare from "../components/index/AboutSquare";
+import AuthenticationSquare from "../components/index/AuthenticationSquare";
 
-import PasswordlessSuccess from "../components/index/PasswordlessSuccess";
-import PasswordlessForm from "../components/index/PasswordlessForm";
+import BlogSquare from "../components/index/BlogSquare";
+import GithubSquare from "../components/index/GithubSquare";
+import ProjectSquare from "../components/index/ProjectSquare";
 
-export default function Home() {
-  const [success, setSuccess] = useState(false);
+import { getPosts } from "../services/blog.service";
+import { getGithubFeed } from "../services/github-rss.service";
+import { getProjects } from "../services/project.service";
 
+export default function Home({ posts, commits, projects }) {
   return (
-    <div
-      css={css`
-        @media screen and (min-width: 800px) {
-          display: grid !important;
-          grid-template-columns: 1fr 1fr !important;
-          grid-template-rows: 1fr;
-          height: 100%;
-          align-items: center;
-        }
-      `}
-    >
-      <div
-        css={css`
-          text-transform: uppercase;
-          text-align: center;
-          padding-bottom: 2rem;
-          margin-bottom: 2rem;
-          margin-left: 2rem;
-          margin-right: 2rem;
-        `}
-      >
-        <h1
-          css={css`
-            color: var(--light-green);
-            font-weight: bold;
-            font-size: 10rem;
-          `}
-        >
-          Hi!
-        </h1>
-        <h2
-          css={css`
-            color: var(--light-yellow);
-            font-weight: bold;
-          `}
-        >
-          <span
-            css={css`
-              color: var(--light-grey);
-            `}
-          >
-            I'm
-          </span>{" "}
-          Matthew
-        </h2>
-        <h3
-          css={css`
-            color: var(--light-grey);
-            font-weight: bold;
-          `}
-        >
-          And I write
-        </h3>
-        <h3
-          css={css`
-            color: var(--light-green);
-            font-weight: bold;
-          `}
-        >
-          <span
-            css={css`
-              color: var(--light-yellow);
-            `}
-          >
-            &lt;code /&gt;
-          </span>{" "}
-          for the Web
-        </h3>
-      </div>
-      <div>
-        {success ? (
-          <PasswordlessSuccess setSuccess={setSuccess} />
-        ) : (
-          <PasswordlessForm setSuccess={setSuccess} />
-        )}
-      </div>
+    <div>
+      <section>
+        <AboutSquare />
+      </section>
+      <section>
+        <AuthenticationSquare />
+      </section>
+      <section>
+        <GithubSquare commits={commits} />
+      </section>
+      <section>
+        <ProjectSquare projects={projects} />
+      </section>
+      <section>
+        <BlogSquare posts={posts} />
+      </section>
     </div>
   );
+}
+
+export async function getStaticProps() {
+  const posts = getPosts(1);
+  const commits = await getGithubFeed();
+  const projects = getProjects();
+
+  return {
+    props: {
+      posts,
+      commits,
+      projects,
+    },
+  };
 }

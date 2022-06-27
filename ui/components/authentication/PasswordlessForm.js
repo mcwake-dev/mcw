@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
 import { useCallback, useState } from "react";
 
 import { requestLoginToken } from "../../services/authentication.service";
@@ -26,14 +24,8 @@ export default function PasswordlessForm({ setSuccess }) {
   });
 
   return (
-    <>
-      <h2
-        css={css`
-          color: var(--light-yellow);
-        `}
-      >
-        Let's Get Started
-      </h2>
+    <div>
+      <h2>Let's Get Started</h2>
       <h3>You'll need an account to get the most out of my apps</h3>
       <MCWForm submit={submit} loading={loading}>
         <MCWFormField
@@ -46,6 +38,6 @@ export default function PasswordlessForm({ setSuccess }) {
         />
         {error}
       </MCWForm>
-    </>
+    </div>
   );
 }

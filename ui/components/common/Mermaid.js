@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
 import { useState } from "react";
 
 import useLayoutEffect from "../../services/isomorphic-effect.service";
@@ -23,11 +21,6 @@ export default function Mermaid({ graphDefinition }) {
   }, [graphDefinition]);
 
   return graphDefinition ? (
-    <div
-      css={css`
-        text-align: center;
-      `}
-      dangerouslySetInnerHTML={{ __html: html }}
-    />
+    <div dangerouslySetInnerHTML={{ __html: html }} />
   ) : null;
 }
